@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tej Mithran</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Tej Mithran — software engineer, cyclist and photographer from Thanjavur, living in Chennai.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&family=Noto+Sans+Tamil:wght@400;600&display=swap">
+<style>
+/* Layout: one mobile column, read like a ride log — cover, rider card, odometer stats, route-ordered story, gallery. */
+:root{
+  --bg:#f6f4ef; --surface:#ffffff; --ink:#1c2230; --muted:#5d6472; --line:#e2ddd2;
+  --sun:#d9822b; --sun-ink:#9a4f0c; --sea:#1f5f74;
+  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Source Serif 4","Noto Sans Tamil",Georgia,serif;
+  --f-data:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --f-tamil:"Noto Sans Tamil","Source Serif 4",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#12161f; --surface:#1a2030; --ink:#eef0f4; --muted:#a3abba; --line:#2b3346;
+  --sun:#f0a050; --sun-ink:#f6b877; --sea:#6fb6cb; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#12161f; --surface:#1a2030; --ink:#eef0f4; --muted:#a3abba; --line:#2b3346;
+  --sun:#f0a050; --sun-ink:#f6b877; --sea:#6fb6cb; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.6}
+.wrap{max-width:640px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 48px}
+.demo{font-family:var(--f-data);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);text-align:center;padding-block:10px}
+.cover{position:relative;border-radius:18px;overflow:hidden;aspect-ratio:16/9;max-width:100%}
+.cover img{width:100%;height:100%;object-fit:cover;display:block}
+.cover .route{position:absolute;left:12px;bottom:12px;font-family:var(--f-data);font-size:11px;color:#fff;background:rgba(10,14,22,.55);padding:4px 8px;border-radius:6px}
+.rider{display:flex;gap:16px;align-items:flex-end;margin-top:-46px;padding-left:12px;position:relative}
+.avatar{width:108px;height:108px;border-radius:50%;object-fit:cover;border:4px solid var(--bg);flex:none;background:var(--surface)}
+.rider .badge{font-family:var(--f-data);font-size:11px;color:var(--sun-ink);border:1px solid var(--sun);border-radius:99px;padding:3px 10px;margin-bottom:8px}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(2.4rem,9vw,3.2rem);line-height:1;letter-spacing:-.02em;margin:16px 0 6px;text-wrap:balance}
+.tag{font-size:1.1rem;color:var(--muted);margin:0}
+.tag b{color:var(--ink);font-weight:600}
+.where{font-family:var(--f-data);font-size:12.5px;color:var(--muted);margin-top:8px}
+.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:22px}
+.actions a,.actions button{display:flex;flex-direction:column;align-items:center;gap:6px;padding:14px 6px;border-radius:14px;background:var(--surface);border:1px solid var(--line);color:var(--ink);text-decoration:none;font:600 13px var(--f-display);cursor:pointer}
+.actions a:hover,.actions button:hover{border-color:var(--sun)}
+.actions svg{width:22px;height:22px;stroke:var(--sun-ink);fill:none;stroke-width:1.8}
+a:focus-visible,button:focus-visible{outline:2px solid var(--sea);outline-offset:2px}
+.odo{display:grid;grid-template-columns:repeat(3,1fr);margin-top:28px;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.odo div{padding:14px 4px;text-align:center}
+.odo div+div{border-left:1px solid var(--line)}
+.odo b{display:block;font-family:var(--f-data);font-weight:600;font-size:1.35rem;font-variant-numeric:tabular-nums;color:var(--ink)}
+.odo span{font-size:12px;color:var(--muted);font-family:var(--f-display)}
+h2{font-family:var(--f-display);font-weight:700;font-size:1.5rem;letter-spacing:-.01em;margin:44px 0 6px}
+.eyebrow{font-family:var(--f-data);font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--sun-ink)}
+.about p{margin:10px 0}
+.ta{font-family:var(--f-tamil);font-size:1.02rem;color:var(--sea)}
+.trip{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:22px}
+.trip li{display:grid;grid-template-columns:72px 1fr;gap:14px}
+.km{font-family:var(--f-data);font-size:12px;color:var(--muted);padding-top:3px;font-variant-numeric:tabular-nums}
+.km b{display:block;color:var(--sun-ink);font-size:15px}
+.trip h3{font-family:var(--f-display);font-weight:700;font-size:1.1rem;margin:0}
+.trip p{margin:4px 0 10px;color:var(--muted)}
+.trip img{border-radius:12px;width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.trip>li>div{min-width:0}
+.hobbies{display:grid;gap:14px;margin-top:16px}
+.hobby{display:grid;grid-template-columns:120px 1fr;gap:14px;align-items:center}
+.hobby img{width:120px;height:120px;border-radius:12px;object-fit:cover}
+.hobby div{min-width:0}
+.hobby h3{font-family:var(--f-display);font-size:1.1rem;margin:0}
+.hobby p{margin:4px 0 0;font-size:15px;color:var(--muted)}
+.hobby small{font-family:var(--f-data);font-size:11.5px;color:var(--sun-ink)}
+.gallery{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:16px}
+.gallery figure{margin:0}
+.gallery img{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;display:block}
+.gallery figure:first-child{grid-column:1/-1}
+.gallery figure:first-child img{aspect-ratio:16/9}
+.gallery figcaption{font-family:var(--f-data);font-size:11px;color:var(--muted);margin-top:4px}
+blockquote{margin:40px 0 0;padding:20px;border-radius:14px;background:var(--surface);border:1px solid var(--line);font-style:italic;font-size:1.1rem}
+blockquote cite{display:block;font-style:normal;font-family:var(--f-data);font-size:12px;color:var(--muted);margin-top:8px}
+footer{margin-top:44px;padding-top:18px;border-top:1px solid var(--line);font-family:var(--f-data);font-size:12px;color:var(--muted);text-align:center;line-height:1.8}
+footer a{color:var(--sun-ink)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);font:600 13px var(--f-display);padding:10px 16px;border-radius:99px}
+/* Motion: one sunrise load sequence + scroll-driven route line. Everything rests fully visible. */
+.trip{position:relative}
+.trip::before{content:"";position:absolute;left:5px;top:8px;bottom:8px;width:2px;background:var(--line);border-radius:2px}
+.trip::after{content:"";position:absolute;left:5px;top:8px;bottom:8px;width:2px;background:linear-gradient(var(--sun),var(--sea));border-radius:2px;transform-origin:top}
+.trip li{position:relative;padding-left:18px}
+.trip li::before{content:"";position:absolute;left:0;top:6px;width:12px;height:12px;border-radius:50%;background:var(--bg);border:2px solid var(--sun);z-index:1}
+.avatar-ring{position:relative;flex:none;border-radius:50%}
+.avatar-ring::after{content:"";position:absolute;inset:-4px;border-radius:50%;background:conic-gradient(var(--sun),var(--sea),var(--sun));z-index:-1}
+@media (prefers-reduced-motion:no-preference){
+  .cover img{animation:kenburns 2.4s cubic-bezier(.2,.7,.2,1) both}
+  .cover .route{animation:rise .6s .9s both}
+  .avatar-ring{animation:pop .7s .35s cubic-bezier(.3,1.6,.5,1) both}
+  .avatar-ring::after{animation:spin 6s linear infinite}
+  .rider .badge{animation:rise .5s .7s both}
+  h1 .w{display:inline-block;animation:rise .7s both}
+  h1 .w:nth-child(2){animation-delay:.12s}
+  h1{animation-delay:.5s}
+  h1 .w{animation-delay:.55s}
+  h1 .w+.w{animation-delay:.68s}
+  .tag{animation:rise .6s .85s both}
+  .where{animation:rise .6s .95s both}
+  .actions>*{animation:rise .5s both}
+  .actions>*:nth-child(1){animation-delay:1.05s}
+  .actions>*:nth-child(2){animation-delay:1.15s}
+  .actions>*:nth-child(3){animation-delay:1.25s}
+  .actions a,.actions button{transition:transform .2s,border-color .2s}
+  .actions a:hover,.actions button:hover{transform:translateY(-3px)}
+  .gallery img,.hobby img{transition:transform .5s}
+  .gallery figure:hover img,.hobby:hover img{transform:scale(1.04)}
+  @supports (animation-timeline:view()){
+    .trip::after{animation:draw linear both;animation-timeline:view();animation-range:entry 20% cover 70%}
+    .reveal{animation:fadeup linear both;animation-timeline:view();animation-range:entry 0% entry 60%}
+  }
+}
+@keyframes kenburns{from{transform:scale(1.18)}to{transform:scale(1)}}
+@keyframes pop{from{transform:scale(.6);opacity:.2}to{transform:scale(1);opacity:1}}
+@keyframes rise{from{transform:translateY(14px);opacity:.15}to{transform:none;opacity:1}}
+@keyframes spin{to{transform:rotate(1turn)}}
+@keyframes draw{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+@keyframes fadeup{from{transform:translateY(28px);opacity:.2}to{transform:none;opacity:1}}
+.gallery figure,.hobby{overflow:hidden;border-radius:12px}
+@media (max-width:420px){.hobby{grid-template-columns:96px 1fr}.hobby img{width:96px;height:96px}.trip li{grid-template-columns:58px 1fr}}
+</style>
+</head>
+<body style="margin:0">
+
+
+<div class="wrap">
+  <div class="demo">Sample profile · AI-generated photos · VMT Maker Labs</div>
+
+  <div class="cover">
+    <img src="img/cover.jpg" alt="Tej riding a road bike along Marina Beach road at sunrise">
+    <span class="route">Marina Beach Rd · 06:12 AM</span>
+  </div>
+
+  <div class="rider">
+    <span class="avatar-ring"><img class="avatar" src="img/profile.jpg" alt="Portrait of Tej Mithran" style="display:block"></span>
+    <span class="badge">● Riding since 2019</span>
+  </div>
+
+  <h1><span class="w">Tej</span> <span class="w">Mithran</span></h1>
+  <p class="tag"><b>Software engineer</b> by day. Cyclist, photographer and weekend dosa master the rest of the time.</p>
+  <div class="where">Chennai, Tamil Nadu · from Thanjavur</div>
+
+  <nav class="actions" aria-label="Contact and social links">
+    <a href="#" aria-label="Instagram (demo link)">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".8"/></svg>Instagram</a>
+    <a href="#" aria-label="YouTube (demo link)">
+      <svg viewBox="0 0 24 24"><rect x="2.5" y="5.5" width="19" height="13" rx="4"/><path d="M10 9.5v5l4.5-2.5z"/></svg>YouTube</a>
+    <button type="button" id="copy-email" data-email="tej.mithran@example.com">
+      <svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6 8.5 7 8.5-7"/></svg>Copy email</button>
+  </nav>
+
+  <section class="odo" aria-label="Ride stats">
+    <div><b data-to="8420">8,420</b><span>km ridden</span></div>
+    <div><b data-to="200">200</b><span>km longest ride</span></div>
+    <div><b data-to="3000" data-plus>3,000+</b><span>photos taken</span></div>
+  </section>
+
+  <section class="about">
+    <h2>About me</h2>
+    <p>I grew up between paddy fields in a small village near Thanjavur, where the temple tower was the tallest thing you could see. I moved to Chennai for my first job in software, and for two years the city felt too big and too fast.</p>
+    <p>A second-hand road bike changed that. Early rides on Marina Beach road turned into long Sunday rides down the East Coast Road, and a camera started coming along. Today I build backend systems at work and spend my mornings chasing sunrise light.</p>
+    <p class="ta">“ஊர் விட்டு வந்தாலும், வயல் வாசம் மனசுல இருக்கு.”</p>
+  </section>
+
+  <section>
+    <h2>The road so far</h2>
+    <div class="eyebrow">Each stop, in the order I rode it</div>
+    <ol class="trip">
+      <li><div class="km"><b>2014</b>Thanjavur</div><div>
+        <h3>Where it started</h3>
+        <p>Village school, cycling 4 km to class every day on an old Atlas.</p>
+        <img src="img/village.jpg" alt="Paddy fields near Thanjavur at sunrise with a temple tower in the distance" loading="lazy"></div></li>
+      <li><div class="km"><b>2017</b>Chennai</div><div>
+        <h3>First job, new city</h3>
+        <p>Joined as a junior developer. Learned Java, Kubernetes and how to survive OMR traffic.</p></div></li>
+      <li><div class="km"><b>2019</b>ECR</div><div>
+        <h3>The first long ride</h3>
+        <p>Chennai to Mahabalipuram on the East Coast Road, 58 km, sea on the left the whole way.</p>
+        <img src="img/ecr.jpg" alt="Tej resting with his road bike on the East Coast Road" loading="lazy"></div></li>
+      <li><div class="km"><b>2024</b>200 km</div><div>
+        <h3>First brevet finished</h3>
+        <p>200 km in 11 hours 40 minutes, inside the 13.5-hour cutoff. Tired legs, very happy face.</p>
+        <img src="img/medal.jpg" alt="Tej holding a finisher medal after a cycling event" loading="lazy"></div></li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>What I love doing</h2>
+    <div class="hobbies">
+      <div class="hobby"><img src="img/ecr.jpg" alt="" loading="lazy"><div>
+        <small>Cycling · 3 rides a week</small><h3>Sunrise rides</h3>
+        <p>ECR and Marina at 5:30 AM, before the city wakes up.</p></div></div>
+      <div class="hobby"><img src="img/shore-temple.jpg" alt="" loading="lazy"><div>
+        <small>Photography · 50mm prime</small><h3>Temples in golden hour</h3>
+        <p>Shore Temple, Thanjavur Big Temple, and the light that makes stone glow.</p></div></div>
+      <div class="hobby"><img src="img/cooking.jpg" alt="" loading="lazy"><div>
+        <small>Cooking · Sundays</small><h3>Amma's recipes</h3>
+        <p>Crispy dosa, kara chutney and filter coffee, the way it was made back home.</p></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Gallery</h2>
+    <div class="gallery">
+      <figure><img src="img/ooty.jpg" alt="Tej at a misty tea plantation viewpoint in Ooty" loading="lazy"><figcaption>Doddabetta road, Ooty · 2,240 m</figcaption></figure>
+      <figure><img src="img/shore-temple.jpg" alt="Tej photographing the Shore Temple, Mahabalipuram" loading="lazy"><figcaption>Shore Temple</figcaption></figure>
+      <figure><img src="img/cooking.jpg" alt="Tej pouring dosa batter in his kitchen" loading="lazy"><figcaption>Sunday dosa</figcaption></figure>
+    </div>
+  </section>
+
+  <blockquote>“Ride early, shoot the light, eat well. The rest sorts itself out.”<cite>— Tej</cite></blockquote>
+
+  <footer>
+    You tapped a VMT Maker Labs NFC tag<br>
+    Want a page like this? <a href="https://www.instagram.com/vmtmakerlabs" target="_blank" rel="noopener">@vmtmakerlabs</a><br>
+    vmtgroup.official@gmail.com
+  </footer>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script>
+const btn=document.getElementById('copy-email'),toast=document.getElementById('toast');
+function show(t){toast.textContent=t;toast.hidden=false;clearTimeout(show.t);show.t=setTimeout(()=>toast.hidden=true,2200)}
+btn.addEventListener('click',()=>{const e=btn.dataset.email;
+  try{navigator.clipboard.writeText(e).then(()=>show('Email copied: '+e),()=>show(e))}catch(_){show(e)}});
+document.querySelectorAll('.about p,.trip li,.hobby,.gallery figure,blockquote,h2').forEach(el=>el.classList.add('reveal'));
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches){
+  const nums=document.querySelectorAll('.odo b[data-to]');
+  const run=()=>nums.forEach(b=>{const to=+b.dataset.to,plus=b.hasAttribute('data-plus'),t0=performance.now(),d=1600;
+    const step=t=>{const p=Math.min(1,(t-t0)/d),v=Math.round(to*(1-Math.pow(1-p,3)));
+      b.textContent=v.toLocaleString('en-IN')+(plus&&p===1?'+':'');if(p<1)requestAnimationFrame(step)};
+    requestAnimationFrame(step)});
+  setTimeout(run,1200);
+}
+</script>
+
+</body>
+</html>
